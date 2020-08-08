@@ -2,7 +2,7 @@
   "name": "frontend-project-lvl2",
   "version": "1.0.0",
   "description": "",
-  "main": "gendiff.js",
+  "main": "bin/gendiff.js",
   "dependencies": {
     "commander": "^6.0.0",
     "lodash": "^4.17.19"
