@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import commander from 'commander';
+import genDiff from '../src/index.js';
 
-const file1 = {};
-const file2 = {};
-
+// отделить
 commander
   .version('0.0.1')
   .arguments('<filepath1> <filepath2>')
@@ -11,14 +10,9 @@ commander
   .option('-f, --format [type]', 'output format')
 
 commander.parse(process.argv)
+/////////////////////////////////////////
+const [filepath1, filepath2] = process.argv.slice(2);
 
-//получила аргументы
-console.log(`'Я БИБЛИОТЕКА' ${process.argv.slice(2)}`);
+const diff = genDiff(filepath1, filepath2);
 
-// нашла нужные файлы по названию
-// спарсила json в объекты с данными
-// сравнила данные и собрала из них строчку для вывода
-
-const compare = (filepath1, filepath12) => {
-  
-}
+console.log(diff);
