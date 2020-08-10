@@ -1,9 +1,11 @@
-<a href="https://github.com/MYiLA/frontend-project-lvl1/actions">
+<!-- Не уверена, что работает. надо перечитать доку https://docs.github.com/en/actions 
+бейдж https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#adding-a-workflow-status-badge-to-your-repository-->
+<a href="https://github.com/MYiLA/frontend-project-lvl2/actions">
   <img src="https://github.com/MYiLA/frontend-project-lvl1/workflows/node-ci/badge.svg" />
 </a>
 
-<a href="https://codeclimate.com/github/MYiLA/frontend-project-lvl1/maintainability">
-  <img src="https://api.codeclimate.com/v1/badges/e7431b9c53d3f13c757a/maintainability" />
+<a href="https://codeclimate.com/github/MYiLA/frontend-project-lvl2/maintainability">
+  <img src="https://api.codeclimate.com/v1/badges/b23a7789e04850f783d8/maintainability" />
 </a>
 
 <br>
