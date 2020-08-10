@@ -7,10 +7,10 @@ commander
   .version('0.0.1')
   .arguments('<filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'output format')
+  .option('-f, --format [type]', 'output format');
 
-commander.parse(process.argv)
-/////////////////////////////////////////
+commander.parse(process.argv);
+/// //////////////////////////////////////
 const [filepath1, filepath2] = process.argv.slice(2);
 
 const diff = genDiff(filepath1, filepath2);

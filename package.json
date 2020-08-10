@@ -5,9 +5,14 @@
   "main": "bin/gendiff.js",
   "dependencies": {
     "commander": "^6.0.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
     "lodash": "^4.17.19"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint-plugin-jest": "^23.20.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

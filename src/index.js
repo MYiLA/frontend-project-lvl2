@@ -1,12 +1,12 @@
 import fs from 'fs';
 import _ from 'lodash';
 
-//библиотека//////////////
+// библиотека//////////////
 const ADD = 'add';
 const DELETE = 'delete';
 const EQUAL = 'equal';
 const CHANGE = 'change';
-/////////////////////////////
+/// //////////////////////////
 
 export default (path1, path2) => {
   const content1 = fs.readFileSync(path1, 'utf-8');
@@ -17,12 +17,12 @@ export default (path1, path2) => {
 
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
-  
+
   const keysUnique = _.uniq(keys1.concat(keys2)).sort();
 
   const diff = [];
 
-  for (const key of keysUnique) {
+  keysUnique.forEach((key) => {
     if (!_.has(data1, key)) {
       diff.push({ type: ADD, key, value: data2[key] });
     } else if (!_.has(data2, key)) {
@@ -30,20 +30,22 @@ export default (path1, path2) => {
     } else {
       const value1 = data1[key];
       const value2 = data2[key];
-      
       if (value1 === value2) {
         diff.push({ type: EQUAL, key, value: value1 });
       } else {
-        diff.push({ type: CHANGE, key, value1, value2 });
+        diff.push(
+          {
+            type: CHANGE, key, value1, value2,
+          },
+        );
       }
     }
-  }
+  });
 
   const result = [];
 
-  for (const operation of diff) {
+  diff.forEach((operation) => {
     const { type, key } = operation;
-
     switch (type) {
       case ADD:
         result.push(`  + ${key}: ${operation.value}`);
@@ -58,8 +60,10 @@ export default (path1, path2) => {
         result.push(`  - ${key}: ${operation.value1}`);
         result.push(`  + ${key}: ${operation.value2}`);
         break;
+      default:
+        throw new Error(`Unknown type operation "${type}"!`);
     }
-  }
+  });
 
-  return `{\n${result.join('\n')}\n}`
+  return `{\n${result.join('\n')}\n}`;
 };
