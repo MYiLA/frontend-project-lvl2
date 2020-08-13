@@ -15,7 +15,7 @@
     "jest": "^26.3.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "npx -n --experimental-vm-modules jest"
   },
   "jest": {
     "testEnvironment": "node"
