@@ -1,4 +1,5 @@
 ![node-ci](https://github.com/MYiLA/frontend-project-lvl2/workflows/node-ci/badge.svg)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b23a7789e04850f783d8/test_coverage)](https://codeclimate.com/github/MYiLA/frontend-project-lvl2/test_coverage)
 
 <a href="https://codeclimate.com/github/MYiLA/frontend-project-lvl2/maintainability">
   <img src="https://api.codeclimate.com/v1/badges/b23a7789e04850f783d8/maintainability" />
