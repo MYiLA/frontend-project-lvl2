@@ -1,5 +1,6 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
+import ini from 'ini';
 
 export default (path) => {
   const content = fs.readFileSync(path, 'utf-8');
@@ -12,5 +13,9 @@ export default (path) => {
     return yaml.safeLoad(content);
   }
 
-  return undefined;
+  if (path.slice(-3) === 'ini') {
+    return ini.parse(content);
+  }
+
+  return console.log('files format undefined');
 };
