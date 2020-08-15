@@ -10,3 +10,9 @@
 
 <h2>Asciinema for gendiff json:</h2>
 <a href="https://asciinema.org/a/fh8RDVQfwX2sgzdMBb0e6iENM" target="_blank"><img src="https://asciinema.org/a/fh8RDVQfwX2sgzdMBb0e6iENM.svg" /></a>
+
+<br>
+<br>
+
+<h2>Asciinema for gendiff yml:</h2>
+<a href="https://asciinema.org/a/BgoQh7ho2ciIKzJKQqQaQwMce" target="_blank"><img src="https://asciinema.org/a/BgoQh7ho2ciIKzJKQqQaQwMce.svg" /></a>
