@@ -1,6 +1,8 @@
 import operations from './operations.js';
 
 export default (diffObject) => {
+  console.log('CREATED PRINT');
+  console.log(diffObject);
   const result = [];
   diffObject.forEach((item) => {
     const { type, key } = item;

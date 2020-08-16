@@ -1,15 +1,29 @@
 import _ from 'lodash';
 import operations from './operations.js';
 
-export default (data1, data2) => {
-  const diff = [];
+const diff = [];
+
+const createDiffObject = (data1, data2) => {
+  console.log('NEW OBJECT');
+  console.log(data1);
+  console.log(data2);
 
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
-
   const keysUnique = _.uniq(keys1.concat(keys2)).sort();
 
+  console.log(`keys1 = ${keys1} keys2 = ${keys2}`);
+
   keysUnique.forEach((key) => {
+    console.log(`KEY ${key}`);
+    console.log(typeof data1[key] === 'object');
+    if ((typeof data1[key] === 'object') && (typeof data2[key] === 'object')) {
+      return (
+        {
+          type: operations.object, key, value: createDiffObject(data1[key], data2[key]),
+        },
+      );
+    } else
     if (!_.has(data1, key)) {
       diff.push({ type: operations.add, key, value: data2[key] });
     } else if (!_.has(data2, key)) {
@@ -31,3 +45,5 @@ export default (data1, data2) => {
 
   return diff;
 };
+
+export default createDiffObject;

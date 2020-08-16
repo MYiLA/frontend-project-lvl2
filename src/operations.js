@@ -3,4 +3,5 @@ export default {
   delete: 'delete',
   equal: 'equal',
   change: 'change',
+  object: 'object',
 };
