@@ -1,12 +1,15 @@
 import operations from './operations.js';
 
-export default (diffObject) => {
+const printResult = (diffObject) => {
   console.log('CREATED PRINT');
   console.log(diffObject);
   const result = [];
   diffObject.forEach((item) => {
     const { type, key } = item;
     switch (type) {
+      case operations.object:
+        result.push(`    ${key}: ${printResult(item.value)}`);
+        break;
       case operations.add:
         result.push(`  + ${key}: ${item.value}`);
         break;
@@ -26,3 +29,5 @@ export default (diffObject) => {
   });
   return `{\n${result.join('\n')}\n}`;
 };
+
+export default printResult;
