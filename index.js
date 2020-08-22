@@ -8,5 +8,5 @@ export default (path1, path2) => {
 
   const diff = createDiffObject(data1, data2);
 
-  return printResult(diff);
+  return printResult(diff, 0);
 };

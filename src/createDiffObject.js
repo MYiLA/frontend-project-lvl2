@@ -9,15 +9,14 @@ const createDiffObject = (data1, data2) => {
   const keysUnique = _.uniq(keys1.concat(keys2)).sort();
 
   keysUnique.forEach((key) => {
-    if ((typeof data1[key] === 'object') && (typeof data2[key] === 'object')) {
-      diff.push({
-        type: operations.object, key, value: createDiffObject(data1[key], data2[key]),
-      });
-    } else
     if (!_.has(data1, key)) {
       diff.push({ type: operations.add, key, value: data2[key] });
     } else if (!_.has(data2, key)) {
       diff.push({ type: operations.delete, key, value: data1[key] });
+    } else if ((typeof data1[key] === 'object') && (typeof data2[key] === 'object')) {
+      diff.push({
+        type: operations.object, key, value: createDiffObject(data1[key], data2[key]),
+      });
     } else {
       const value1 = data1[key];
       const value2 = data2[key];
