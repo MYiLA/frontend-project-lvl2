@@ -1,6 +1,6 @@
 import parsers from './src/parsers.js';
 import createDiffObject from './src/createDiffObject.js';
-import stylish from './src/stylish.js';
+import stylish from './src/formatters/stylish.js';
 
 export default (path1, path2) => {
   const data1 = parsers(path1);

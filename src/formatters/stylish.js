@@ -1,4 +1,4 @@
-import operations from './operations.js';
+import operations from '../operations.js';
 
 const indent = '    ';
 
