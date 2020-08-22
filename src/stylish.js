@@ -14,19 +14,17 @@ const printValue = (value, depth) => {
   }
 
   return `{\n${result.join('\n')}\n${indent.repeat(depth)}}`;
-  // const count = printValue(value);
-  // `{\n${result.join('\n')}\n}`;
 };
 
 printValue();
 
-const printResult = (diffObject, depth) => {
+const stylish = (diffObject, depth = 0) => {
   const result = [];
   diffObject.forEach((item) => {
     const { type, key } = item;
     switch (type) {
       case operations.object:
-        result.push(`${indent.repeat(depth + 1)}${key}: ${printResult(item.value, depth + 1)}`);
+        result.push(`${indent.repeat(depth + 1)}${key}: ${stylish(item.value, depth + 1)}`);
         break;
       case operations.add:
         result.push(`${indent.repeat(depth)}  + ${key}: ${printValue(item.value, depth + 1)}`);
@@ -48,4 +46,4 @@ const printResult = (diffObject, depth) => {
   return `{\n${result.join('\n')}\n${indent.repeat(depth)}}`;
 };
 
-export default printResult;
+export default stylish;
