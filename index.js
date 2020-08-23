@@ -1,13 +1,9 @@
 import readData from './src/readData.js';
 import parseData from './src/parseData.js';
 import createDiffObject from './src/createDiffObject.js';
-import stylish from './src/formatters/stylish.js';
-import plain from './src/formatters/plain.js';
-import json from './src/formatters/json.js';
+import format from './src/formatters/index.js';
 
-export default (path1, path2, formatterType = 'stylish') => {
-  let result = '';
-
+export default (path1, path2, formatterType) => {
   const data1 = readData(path1);
   const data2 = readData(path2);
 
@@ -16,19 +12,7 @@ export default (path1, path2, formatterType = 'stylish') => {
 
   const diff = createDiffObject(dataObject1, dataObject2);
 
-  switch (formatterType) {
-    case 'stylish':
-      result = stylish(diff);
-      break;
-    case 'plain':
-      result = plain(diff);
-      break;
-    case 'json':
-      result = json(diff);
-      break;
-    default:
-      throw new Error(`Unknown formatter type "${formatterType}"!`);
-  }
+  const result = format(diff, formatterType);
 
   return result;
 };
