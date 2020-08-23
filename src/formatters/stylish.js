@@ -2,48 +2,49 @@ import operations from '../operations.js';
 
 const indent = '    ';
 
-const printValue = (value, depth) => {
-  const result = [];
+const formatIndents = (type, depth, key) => `${indent.repeat(depth)}  ${type} ${key}: `;
 
-  if (typeof value === 'object') {
-    Object.keys(value).forEach((key) => {
-      result.push(`${indent.repeat(depth + 1)}${key}: ${printValue(value[key], (depth + 1))}`);
-    });
-  } else {
+const formatValue = (value, depthValue) => {
+  if (typeof value !== 'object') {
     return `${value}`;
   }
-
-  return `{\n${result.join('\n')}\n${indent.repeat(depth)}}`;
+  const result = [];
+  Object.keys(value).forEach((key) => {
+    result.push(`${formatIndents(' ', depthValue, key)}${formatValue(value[key], (depthValue + 1))}`);
+  });
+  return `{\n${result.join('\n')}\n${indent.repeat(depthValue)}}`;
 };
 
-printValue();
-
-const stylish = (diffObject, depth = 0) => {
-  const result = [];
-  diffObject.forEach((item) => {
-    const { type, key } = item;
-    switch (type) {
-      case operations.object:
-        result.push(`${indent.repeat(depth + 1)}${key}: ${stylish(item.value, depth + 1)}`);
-        break;
-      case operations.add:
-        result.push(`${indent.repeat(depth)}  + ${key}: ${printValue(item.value, depth + 1)}`);
-        break;
-      case operations.delete:
-        result.push(`${indent.repeat(depth)}  - ${key}: ${printValue(item.value, depth + 1)}`);
-        break;
-      case operations.equal:
-        result.push(`${indent.repeat(depth)}    ${key}: ${printValue(item.value, depth + 1)}`);
-        break;
-      case operations.change:
-        result.push(`${indent.repeat(depth)}  - ${key}: ${printValue(item.value1, depth + 1)}`);
-        result.push(`${indent.repeat(depth)}  + ${key}: ${printValue(item.value2, depth + 1)}`);
-        break;
-      default:
-        throw new Error(`Unknown type operation "${type}"!`);
-    }
-  });
-  return `{\n${result.join('\n')}\n${indent.repeat(depth)}}`;
+const stylish = (diffObject) => {
+  const iter = (innerObject, depth) => {
+    const result = [];
+    innerObject.forEach((item) => {
+      const { type, key } = item;
+      switch (type) {
+        case operations.object:
+          result.push(`${formatIndents(' ', depth, key)}${iter(item.value, depth + 1)}`);
+          break;
+        case operations.add:
+          result.push(`${formatIndents('+', depth, key)}${formatValue(item.value, depth + 1)}`);
+          break;
+        case operations.delete:
+          result.push(`${formatIndents('-', depth, key)}${formatValue(item.value, depth + 1)}`);
+          break;
+        case operations.equal:
+          result.push(`${formatIndents(' ', depth, key)}${formatValue(item.value, depth + 1)}`);
+          break;
+        case operations.change:
+          result.push(`${formatIndents('-', depth, key)}${formatValue(item.value1, depth + 1)}`);
+          result.push(`${formatIndents('+', depth, key)}${formatValue(item.value2, depth + 1)}`);
+          break;
+        default:
+          throw new Error(`Unknown type operation "${type}"!`);
+      }
+    });
+    return `{\n${result.join('\n')}\n${indent.repeat(depth)}}`;
+  };
+  const diff = iter(diffObject, 0);
+  return diff;
 };
 
 export default stylish;
