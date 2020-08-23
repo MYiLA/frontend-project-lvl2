@@ -22,3 +22,9 @@
 
 <h2>Asciinema for gendiff ini:</h2>
 <a href="https://asciinema.org/a/LodfJVKDCBkOdQQ7DYUSJQcNa" target="_blank"><img src="https://asciinema.org/a/LodfJVKDCBkOdQQ7DYUSJQcNa.svg" /></a>
+
+<br>
+<br>
+
+<h2>Asciinema recursive comparison:</h2>
+<a href="https://asciinema.org/a/kUmzneO2pjudqEwQ5If5Z6uVT" target="_blank"><img src="https://asciinema.org/a/kUmzneO2pjudqEwQ5If5Z6uVT.svg" /></a>
