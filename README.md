@@ -34,3 +34,9 @@
 
 <h2>Asciinema formatter plain:</h2>
 <a href="https://asciinema.org/a/ThdoL8s0so31TC9KCfAbuLhQ4" target="_blank"><img src="https://asciinema.org/a/ThdoL8s0so31TC9KCfAbuLhQ4.svg" /></a>
+
+<br>
+<br>
+
+<h2>Asciinema formatter json:</h2>
+<a href="https://asciinema.org/a/tQ86GxdT0a3zp8UxrpvMoi4NT" target="_blank"><img src="https://asciinema.org/a/tQ86GxdT0a3zp8UxrpvMoi4NT.svg" /></a>
