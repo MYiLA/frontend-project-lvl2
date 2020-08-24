@@ -3,21 +3,14 @@ import plain from './plain.js';
 import json from './json.js';
 
 export default (diff, formatterType) => {
-  let result = '';
-
   switch (formatterType) {
     case 'stylish':
-      result = stylish(diff);
-      break;
+      return stylish(diff);
     case 'plain':
-      result = plain(diff);
-      break;
+      return plain(diff);
     case 'json':
-      result = json(diff);
-      break;
+      return json(diff);
     default:
       throw new Error(`Unknown formatter type "${formatterType}"!`);
   }
-
-  return result;
 };

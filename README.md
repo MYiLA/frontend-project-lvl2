@@ -26,7 +26,7 @@
 <br>
 <br>
 
-<h2>Asciinema recursive comparison:</h2>
+<h2>Asciinema formatter stylish:</h2>
 <a href="https://asciinema.org/a/kUmzneO2pjudqEwQ5If5Z6uVT" target="_blank"><img src="https://asciinema.org/a/kUmzneO2pjudqEwQ5If5Z6uVT.svg" /></a>
 
 <br>

@@ -2,21 +2,14 @@ import yaml from 'js-yaml';
 import ini from 'ini';
 
 export default (content, extname) => {
-  let result = {};
-
   switch (extname) {
     case '.json':
-      result = JSON.parse(content);
-      break;
+      return JSON.parse(content);
     case '.yml':
-      result = yaml.safeLoad(content);
-      break;
+      return yaml.safeLoad(content);
     case '.ini':
-      result = ini.parse(content);
-      break;
+      return ini.parse(content);
     default:
       throw new Error(`Unknown file format "${extname}"!`);
   }
-
-  return result;
 };
