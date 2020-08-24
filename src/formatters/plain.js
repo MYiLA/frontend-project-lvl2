@@ -15,8 +15,6 @@ const plain = (diffObj) => {
       const { type, key } = item;
       switch (type) {
         case operations.object:
-          console.log(key);
-          console.log(item);
           result.push(iter(item.value, `${path}${key}.`));
           break;
         case operations.add:

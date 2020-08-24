@@ -28,3 +28,9 @@
 
 <h2>Asciinema recursive comparison:</h2>
 <a href="https://asciinema.org/a/kUmzneO2pjudqEwQ5If5Z6uVT" target="_blank"><img src="https://asciinema.org/a/kUmzneO2pjudqEwQ5If5Z6uVT.svg" /></a>
+
+<br>
+<br>
+
+<h2>Asciinema formatter plain:</h2>
+<a href="https://asciinema.org/a/ThdoL8s0so31TC9KCfAbuLhQ4" target="_blank"><img src="https://asciinema.org/a/ThdoL8s0so31TC9KCfAbuLhQ4.svg" /></a>
