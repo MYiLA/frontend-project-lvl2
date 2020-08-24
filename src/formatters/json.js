@@ -1,4 +1,2 @@
-const json = (obj) => {
-  return obj;
-}
+const json = (obj) => obj;
 export default json;
