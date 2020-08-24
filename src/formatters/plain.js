@@ -3,8 +3,12 @@ import operations from '../operations.js';
 
 const formatValue = (value) => {
   if (typeof value !== 'object') {
-    return `${value}`;
+    if (typeof value === 'boolean') {
+      return `${value}`;
+    }
+    return `'${value}'`;
   }
+
   return '[complex value]';
 };
 
@@ -26,7 +30,7 @@ const plain = (diffObj) => {
         case operations.equal:
           break;
         case operations.change:
-          result.push(`Property '${path}${key}' was updated. From '${formatValue(item.value1)}' to '${formatValue(item.value2)}'`);
+          result.push(`Property '${path}${key}' was updated. From ${formatValue(item.value1)} to ${formatValue(item.value2)}`);
           break;
         default:
           throw new Error(`Unknown type operation "${type}"!`);
