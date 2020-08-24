@@ -2,15 +2,16 @@ import operations from '../operations.js';
 
 const indent = '    ';
 
-const formatIndents = (type, depth, key) => `${indent.repeat(depth)}  ${type} ${key}: `;
+const formatIndents = (depth) => `${indent.repeat(depth)}`;
 
 const formatValue = (value, depthValue) => {
   if (typeof value !== 'object') {
     return `${value}`;
   }
   const result = [];
+  const indents = formatIndents(depthValue);
   Object.keys(value).forEach((key) => {
-    result.push(`${formatIndents(' ', depthValue, key)}${formatValue(value[key], (depthValue + 1))}`);
+    result.push(`${indents}    ${key}: ${formatValue(value[key], (depthValue + 1))}`);
   });
   return `{\n${result.join('\n')}\n${indent.repeat(depthValue)}}`;
 };
@@ -19,23 +20,24 @@ const stylish = (diffObject) => {
   const iter = (innerObject, depth) => {
     const result = [];
     innerObject.forEach((item) => {
+      const indents = formatIndents(depth);
       const { type, key } = item;
       switch (type) {
         case operations.object:
-          result.push(`${formatIndents(' ', depth, key)}${iter(item.value, depth + 1)}`);
+          result.push(`${indents}    ${key}: ${iter(item.value, depth + 1)}`);
           break;
         case operations.add:
-          result.push(`${formatIndents('+', depth, key)}${formatValue(item.value, depth + 1)}`);
+          result.push(`${indents}  + ${key}: ${formatValue(item.value, depth + 1)}`);
           break;
         case operations.delete:
-          result.push(`${formatIndents('-', depth, key)}${formatValue(item.value, depth + 1)}`);
+          result.push(`${indents}  - ${key}: ${formatValue(item.value, depth + 1)}`);
           break;
         case operations.equal:
-          result.push(`${formatIndents(' ', depth, key)}${formatValue(item.value, depth + 1)}`);
+          result.push(`${indents}    ${key}: ${formatValue(item.value, depth + 1)}`);
           break;
         case operations.change:
-          result.push(`${formatIndents('-', depth, key)}${formatValue(item.value1, depth + 1)}`);
-          result.push(`${formatIndents('+', depth, key)}${formatValue(item.value2, depth + 1)}`);
+          result.push(`${indents}  - ${key}: ${formatValue(item.value1, depth + 1)}`);
+          result.push(`${indents}  + ${key}: ${formatValue(item.value2, depth + 1)}`);
           break;
         default:
           throw new Error(`Unknown type operation "${type}"!`);
