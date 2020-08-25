@@ -8,11 +8,8 @@ const formatValue = (value, depthValue) => {
   if (typeof value !== 'object') {
     return `${value}`;
   }
-  const result = [];
   const indents = formatIndents(depthValue);
-  Object.keys(value).forEach((key) => {
-    result.push(`${indents}    ${key}: ${formatValue(value[key], (depthValue + 1))}`);
-  });
+  const result = Object.keys(value).map((key) => `${indents}    ${key}: ${formatValue(value[key], (depthValue + 1))}`);
   return `{\n${result.join('\n')}\n${indent.repeat(depthValue)}}`;
 };
 

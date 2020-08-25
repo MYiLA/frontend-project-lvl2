@@ -14,29 +14,24 @@ const formatValue = (value) => {
 
 const plain = (diffObj) => {
   const iter = (innerObj, path) => {
-    const result = [];
-    innerObj.forEach((item) => {
+    const result = innerObj.map((item) => {
       const { type, key } = item;
       switch (type) {
         case operations.object:
-          result.push(iter(item.value, `${path}${key}.`));
-          break;
+          return iter(item.value, `${path}${key}.`);
         case operations.add:
-          result.push(`Property '${path}${key}' was added with value: ${formatValue(item.value)}`);
-          break;
+          return `Property '${path}${key}' was added with value: ${formatValue(item.value)}`;
         case operations.delete:
-          result.push(`Property '${path}${key}' was removed`);
-          break;
+          return `Property '${path}${key}' was removed`;
         case operations.equal:
-          break;
+          return null;
         case operations.change:
-          result.push(`Property '${path}${key}' was updated. From ${formatValue(item.value1)} to ${formatValue(item.value2)}`);
-          break;
+          return `Property '${path}${key}' was updated. From ${formatValue(item.value1)} to ${formatValue(item.value2)}`;
         default:
           throw new Error(`Unknown type operation "${type}"!`);
       }
     });
-    return `${result.join('\n')}`;
+    return result.filter(Boolean).join('\n');
   };
 
   const plainResult = iter(diffObj, '');
