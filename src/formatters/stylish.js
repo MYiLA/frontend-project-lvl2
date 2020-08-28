@@ -1,53 +1,47 @@
+import _ from 'lodash';
 import operations from '../operations.js';
 
 const indent = '    ';
 
 const formatIndents = (depth) => `${indent.repeat(depth)}`;
 
-const formatResult = (arr, depth) => `{\n${arr.join('\n')}\n${depth}}`;
+const wrapInBrackets = (text, closeIndent) => `{\n${text}\n${closeIndent}}`;
 
 const formatValue = (value, depthValue) => {
-  if (typeof value !== 'object') {
+  if (!_.isPlainObject(value)) {
     return `${value}`;
   }
   const indents = formatIndents(depthValue);
-  const result = Object.keys(value).map((key) => {
-    const formatedValue = formatValue(value[key], (depthValue + 1));
-    return `${indents}    ${key}: ${formatedValue}`;
-  });
-  return formatResult(result, indents);
+  const content = Object.keys(value)
+    .map((key) => `${indents}    ${key}: ${formatValue(value[key], (depthValue + 1))}`)
+    .join('\n');
+  return wrapInBrackets(content, indents);
 };
 
 const stylish = (diffObject) => {
   const iter = (innerObject, depth) => {
-    const result = innerObject.map((item) => {
+    const content = innerObject.flatMap((item) => {
       const indents = formatIndents(depth);
       const { type, key } = item;
-      const formatedValue = {
-        val: formatValue(item.value, depth + 1),
-        val1: formatValue(item.value1, depth + 1),
-        val2: formatValue(item.value2, depth + 1),
-        objVal: iter(item.value, depth + 1),
-      };
       switch (type) {
         case operations.object:
-          return `${indents}    ${key}: ${formatedValue.objVal}`;
+          return [`${indents}    ${key}: ${iter(item.value, depth + 1)}`];
         case operations.add:
-          return `${indents}  + ${key}: ${formatedValue.val}`;
+          return [`${indents}  + ${key}: ${formatValue(item.value, depth + 1)}`];
         case operations.delete:
-          return `${indents}  - ${key}: ${formatedValue.val}`;
+          return [`${indents}  - ${key}: ${formatValue(item.value, depth + 1)}`];
         case operations.equal:
-          return `${indents}    ${key}: ${formatedValue.val}`;
+          return [`${indents}    ${key}: ${formatValue(item.value, depth + 1)}`];
         case operations.change:
           return [
-            `${indents}  - ${key}: ${formatedValue.val1}`,
-            `${indents}  + ${key}: ${formatedValue.val2}`,
-          ].join('\n');
+            `${indents}  - ${key}: ${formatValue(item.value1, depth + 1)}`,
+            `${indents}  + ${key}: ${formatValue(item.value2, depth + 1)}`,
+          ];
         default:
           throw new Error(`Unknown type operation "${type}"!`);
       }
-    });
-    return formatResult(result, formatIndents(depth));
+    }).join('\n');
+    return wrapInBrackets(content, formatIndents(depth));
   };
 
   return iter(diffObject, 0);

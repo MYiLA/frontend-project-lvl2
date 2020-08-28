@@ -13,7 +13,7 @@ const createDiffObject = (data1, data2) => {
     if (!_.has(data2, key)) {
       return { type: operations.delete, key, value: data1[key] };
     }
-    if ((typeof data1[key] === 'object') && (typeof data2[key] === 'object')) {
+    if ((_.isPlainObject(data1[key])) && (_.isPlainObject(data2[key]))) {
       return {
         type: operations.object, key, value: createDiffObject(data1[key], data2[key]),
       };
