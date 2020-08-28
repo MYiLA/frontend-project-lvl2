@@ -4,46 +4,53 @@ const indent = '    ';
 
 const formatIndents = (depth) => `${indent.repeat(depth)}`;
 
+const formatResult = (arr, depth) => `{\n${arr.join('\n')}\n${depth}}`;
+
 const formatValue = (value, depthValue) => {
   if (typeof value !== 'object') {
     return `${value}`;
   }
   const indents = formatIndents(depthValue);
-  const result = Object.keys(value).map((key) => `${indents}    ${key}: ${formatValue(value[key], (depthValue + 1))}`);
-  return `{\n${result.join('\n')}\n${indent.repeat(depthValue)}}`;
+  const result = Object.keys(value).map((key) => {
+    const formatedValue = formatValue(value[key], (depthValue + 1));
+    return `${indents}    ${key}: ${formatedValue}`;
+  });
+  return formatResult(result, indents);
 };
 
 const stylish = (diffObject) => {
   const iter = (innerObject, depth) => {
-    const result = [];
-    innerObject.forEach((item) => {
+    const result = innerObject.map((item) => {
       const indents = formatIndents(depth);
       const { type, key } = item;
+      const formatedValue = {
+        val: formatValue(item.value, depth + 1),
+        val1: formatValue(item.value1, depth + 1),
+        val2: formatValue(item.value2, depth + 1),
+        objVal: iter(item.value, depth + 1),
+      };
       switch (type) {
         case operations.object:
-          result.push(`${indents}    ${key}: ${iter(item.value, depth + 1)}`);
-          break;
+          return `${indents}    ${key}: ${formatedValue.objVal}`;
         case operations.add:
-          result.push(`${indents}  + ${key}: ${formatValue(item.value, depth + 1)}`);
-          break;
+          return `${indents}  + ${key}: ${formatedValue.val}`;
         case operations.delete:
-          result.push(`${indents}  - ${key}: ${formatValue(item.value, depth + 1)}`);
-          break;
+          return `${indents}  - ${key}: ${formatedValue.val}`;
         case operations.equal:
-          result.push(`${indents}    ${key}: ${formatValue(item.value, depth + 1)}`);
-          break;
+          return `${indents}    ${key}: ${formatedValue.val}`;
         case operations.change:
-          result.push(`${indents}  - ${key}: ${formatValue(item.value1, depth + 1)}`);
-          result.push(`${indents}  + ${key}: ${formatValue(item.value2, depth + 1)}`);
-          break;
+          return [
+            `${indents}  - ${key}: ${formatedValue.val1}`,
+            `${indents}  + ${key}: ${formatedValue.val2}`,
+          ].join('\n');
         default:
           throw new Error(`Unknown type operation "${type}"!`);
       }
     });
-    return `{\n${result.join('\n')}\n${indent.repeat(depth)}}`;
+    return formatResult(result, formatIndents(depth));
   };
-  const diff = iter(diffObject, 0);
-  return diff;
+
+  return iter(diffObject, 0);
 };
 
 export default stylish;

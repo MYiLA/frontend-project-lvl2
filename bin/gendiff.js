@@ -2,7 +2,6 @@
 import commander from 'commander';
 import genDiff from '../index.js';
 
-// отделить
 commander
   .version('0.0.1')
   .arguments('<filepath1> <filepath2>')

@@ -1,15 +1,13 @@
-// http://common.setting6.doge.wow recursion
 import operations from '../operations.js';
 
 const formatValue = (value) => {
-  if (typeof value !== 'object') {
-    if (typeof value === 'boolean') {
-      return `${value}`;
-    }
-    return `'${value}'`;
+  if (typeof value === 'object') {
+    return '[complex value]';
   }
-
-  return '[complex value]';
+  if (typeof value === 'boolean') {
+    return value;
+  }
+  return `'${value}'`;
 };
 
 const plain = (diffObj) => {
@@ -34,8 +32,7 @@ const plain = (diffObj) => {
     return result.filter(Boolean).join('\n');
   };
 
-  const plainResult = iter(diffObj, '');
-  return plainResult;
+  return iter(diffObj, '');
 };
 
 export default plain;

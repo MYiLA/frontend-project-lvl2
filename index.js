@@ -7,8 +7,8 @@ export default (path1, path2, formatterType) => {
   const data1 = readData(path1);
   const data2 = readData(path2);
 
-  const dataObject1 = parseData(data1.content, data1.extname);
-  const dataObject2 = parseData(data2.content, data2.extname);
+  const dataObject1 = parseData(data1);
+  const dataObject2 = parseData(data2);
 
   const diff = createDiffObject(dataObject1, dataObject2);
 
