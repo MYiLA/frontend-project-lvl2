@@ -16,7 +16,7 @@ export default (path1, path2, formatterType) => {
 
   const diff = createDiffObject(dataObject1, dataObject2);
 
-  const result = format(diff, formatterType);
+  const formattedDiff = format(diff, formatterType);
 
-  return result;
+  return formattedDiff;
 };

@@ -11,10 +11,12 @@ const formatValue = (value, depthValue) => {
   if (!_.isPlainObject(value)) {
     return `${value}`;
   }
+
   const indents = formatIndents(depthValue);
   const content = Object.keys(value)
     .map((key) => `${indents}    ${key}: ${formatValue(value[key], (depthValue + 1))}`)
     .join('\n');
+
   return wrapInBrackets(content, indents);
 };
 
@@ -23,6 +25,7 @@ const stylish = (diffObject) => {
     const content = innerObject.flatMap((item) => {
       const indents = formatIndents(depth);
       const { type, key } = item;
+
       switch (type) {
         case operations.object:
           return [`${indents}    ${key}: ${iter(item.value, depth + 1)}`];
@@ -37,10 +40,12 @@ const stylish = (diffObject) => {
             `${indents}  - ${key}: ${formatValue(item.value1, depth + 1)}`,
             `${indents}  + ${key}: ${formatValue(item.value2, depth + 1)}`,
           ];
+
         default:
           throw new Error(`Unknown type operation "${type}"!`);
       }
     }).join('\n');
+
     return wrapInBrackets(content, formatIndents(depth));
   };
 

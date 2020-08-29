@@ -10,23 +10,29 @@ const createDiffObject = (data1, data2) => {
     if (!_.has(data1, key)) {
       return { type: operations.add, key, value: data2[key] };
     }
+
     if (!_.has(data2, key)) {
       return { type: operations.delete, key, value: data1[key] };
     }
+
     if ((_.isPlainObject(data1[key])) && (_.isPlainObject(data2[key]))) {
       return {
         type: operations.object, key, value: createDiffObject(data1[key], data2[key]),
       };
     }
+
     const value1 = data1[key];
     const value2 = data2[key];
+
     if (value1 === value2) {
       return { type: operations.equal, key, value: value1 };
     }
+
     return {
       type: operations.change, key, value1, value2,
     };
   });
+
   return diff;
 };
 
